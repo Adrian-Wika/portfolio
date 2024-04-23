@@ -3,7 +3,24 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 
-function createText(font, materials, scene) {
+let raycaster = new THREE.Raycaster()
+let pointer
+let particles
+let intersects
+
+function onPointerMove(event) {
+
+    // calculate pointer position in normalized device coordinates
+    // (-1 to +1) for both components
+
+    if (pointer) {
+        pointer.x = (event.clientX / window.innerWidth) * 2 - 1
+        pointer.y = - (event.clientY / window.innerHeight) * 2 + 1
+    }
+
+}
+
+function createText(font, material, scene) {
     const thePoints = []
     const shapes = font.generateShapes('TEST', 20)
     const geometry = new THREE.ShapeGeometry(shapes)
@@ -52,11 +69,17 @@ function createText(font, materials, scene) {
     geoParticles.translate(xMid, yMid, 0)
     geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1))
 
-    const material = new THREE.PointsMaterial({ color: 0xffffff })
-
-    const particles = new THREE.Points(geoParticles, material)
+    particles = new THREE.Points(geoParticles, material)
     scene.add(particles)
+}
 
+function moveParticles(raycaster, pointer, camera, scene) {
+    if (intersects)
+        for (let i = 0; i < intersects.length; i++) {
+
+            intersects[i].object.material.color.set(0xff0000)
+
+        }
 }
 
 const MainCanvas = () => {
@@ -97,18 +120,30 @@ const MainCanvas = () => {
             scene.add(lightHelper, gridHelper, axisHelper)
             const controls = new OrbitControls(camera, renderer.domElement)
 
-            const materials = new THREE.PointsMaterial({ color: 0xffffff })
+            const material = new THREE.PointsMaterial({ color: 0xffffff })
+
+
+            pointer = new THREE.Vector2()
 
             if (font) {
-                createText(font, materials, scene)
+                createText(font, material, scene)
+                moveParticles(raycaster, pointer, camera, scene)
             }
 
             function animate() {
+                window.addEventListener('pointermove', onPointerMove)
                 requestAnimationFrame(animate)
+                console.log(pointer)
+                raycaster.setFromCamera(pointer, camera) // update the picking ray with the camera and pointer position
+                intersects = raycaster.intersectObjects(scene.children)
 
-                controls.update()
+                for (let i = 0; i < intersects.length; i++) {
+
+                    intersects[i].object.material.color.set(0xff0000)
+
+                }
+
                 renderer.render(scene, camera)
-
             }
 
             animate()
