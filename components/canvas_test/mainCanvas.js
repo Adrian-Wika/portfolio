@@ -6,7 +6,14 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 let raycaster = new THREE.Raycaster()
 let pointer
 let particles
+let particlesCopy
 let intersects
+let pointerMoving
+
+function distanceCalc(x1, y1, x2, y2) {
+
+    return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
+}
 
 function onPointerMove(event) {
 
@@ -70,16 +77,67 @@ function createText(font, material, scene) {
     geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1))
 
     particles = new THREE.Points(geoParticles, material)
+    particlesCopy = new THREE.BufferGeometry()
+    particlesCopy.copy(particles.geometry)
+
     scene.add(particles)
 }
 
-function moveParticles(raycaster, pointer, camera, scene) {
-    if (intersects)
-        for (let i = 0; i < intersects.length; i++) {
+function moveParticles(raycaster, pointer, camera, scene, particles) {
+    const time = ((.001 * performance.now()) % 12) / 12
+    const zigzagTime = (1 + (Math.sin(time * 2 * Math.PI))) / 6
 
-            intersects[i].object.material.color.set(0xff0000)
+    if (intersects.length > 0 && particles) {
+        const particlesPosition = particles.geometry.attributes.position
+        const particlesPositionCopy = particlesCopy.attributes.position
 
+        const mx = intersects[0].point.x
+        const my = intersects[0].point.y
+        const mz = intersects[0].point.z
+
+        for (var i = 0, l = particlesPosition.count; i < l; i++) {
+            const initX = particlesPositionCopy.getX(i)
+            const initY = particlesPositionCopy.getY(i)
+            const initZ = particlesPositionCopy.getZ(i)
+
+            let px = particlesPosition.getX(i)
+            let py = particlesPosition.getY(i)
+            let pz = particlesPosition.getZ(i)
+
+            let dx = mx - px
+            let dy = my - py
+            const dz = mz - pz
+
+            const mouseDistance = distanceCalc(mx, my, px, py)
+            let d = (dx = mx - px) * dx + (dy = my - py) * dy
+            const f = - 150 / d
+
+
+            if (mouseDistance < 150) {
+                // console.log(mouseDistance)
+                const t = Math.atan2(dy, dx)
+                px += f * Math.cos(t)
+                py += f * Math.sin(t)
+
+                particlesPosition.setXYZ(i, px, py, pz)
+                particlesPosition.needsUpdate = true
+
+
+
+            }
+
+
+            px += (initX - px) * .05
+            py += (initY - py) * .05
+            pz += (initZ - pz) * .05
+
+            particlesPosition.setXYZ(i, px, py, pz)
+            particlesPosition.needsUpdate = true
         }
+
+
+    }
+
 }
 
 const MainCanvas = () => {
@@ -115,9 +173,8 @@ const MainCanvas = () => {
             const gridHelper = new THREE.GridHelper(200, 50)
             const axisHelper = new THREE.AxesHelper(60)
 
-            scene.add(ambientLight)
-            scene.add(pointLight)
-            scene.add(lightHelper, gridHelper, axisHelper)
+            scene.add(lightHelper, gridHelper, axisHelper, ambientLight, pointLight)
+
             const controls = new OrbitControls(camera, renderer.domElement)
 
             const material = new THREE.PointsMaterial({ color: 0xffffff })
@@ -127,22 +184,21 @@ const MainCanvas = () => {
 
             if (font) {
                 createText(font, material, scene)
-                moveParticles(raycaster, pointer, camera, scene)
             }
 
             function animate() {
-                window.addEventListener('pointermove', onPointerMove)
+                window.addEventListener('pointermove', (event) => {
+                    clearTimeout(pointerMoving)
+                    pointerMoving = setTimeout(() => {
+                        onPointerMove(event)
+                    }, 1)
+
+                })
                 requestAnimationFrame(animate)
-                console.log(pointer)
+
                 raycaster.setFromCamera(pointer, camera) // update the picking ray with the camera and pointer position
                 intersects = raycaster.intersectObjects(scene.children)
-
-                for (let i = 0; i < intersects.length; i++) {
-
-                    intersects[i].object.material.color.set(0xff0000)
-
-                }
-
+                moveParticles(raycaster, pointer, camera, scene, particles)
                 renderer.render(scene, camera)
             }
 
