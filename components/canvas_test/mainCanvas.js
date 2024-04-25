@@ -7,6 +7,7 @@ let raycaster = new THREE.Raycaster()
 let pointer
 let particles
 let particlesCopy
+let particlesRandomTop
 let intersects
 let pointerMoving
 
@@ -27,9 +28,14 @@ function onPointerMove(event) {
 
 }
 
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min
+}
+
 function createText(font, material, scene) {
     const thePoints = []
-    const shapes = font.generateShapes('TEST', 20)
+    const theRandomPoints = []
+    const shapes = font.generateShapes('TEST', 10)
     const geometry = new THREE.ShapeGeometry(shapes)
     geometry.computeBoundingBox()
     const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x)
@@ -59,18 +65,23 @@ function createText(font, material, scene) {
 
         let shape = shapes[x]
 
-        const amountPoints = (shape.type == 'Path') ? 1500 / 2 : 1500
+        const amountPoints = (shape.type == 'Path') ? 100 / 2 : 100
 
         const points = shape.getSpacedPoints(amountPoints)
 
         points.forEach((element, z) => {
-
+            const randomTop = new THREE.Vector3(getRndInteger(-100, 100), getRndInteger(40, 60))
             const a = new THREE.Vector3(element.x, element.y, 0)
             thePoints.push(a)
             sizes.push(1)
+            theRandomPoints.push(randomTop)
 
         })
     }
+
+    const geoParticlesRandom = new THREE.BufferGeometry().setFromPoints(theRandomPoints)
+    particlesRandomTop = new THREE.Points(geoParticlesRandom, material)
+    scene.add(particlesRandomTop)
 
     const geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints)
     geoParticles.translate(xMid, yMid, 0)
@@ -80,12 +91,10 @@ function createText(font, material, scene) {
     particlesCopy = new THREE.BufferGeometry()
     particlesCopy.copy(particles.geometry)
 
-    scene.add(particles)
+    // scene.add(particles)
 }
 
 function moveParticles(raycaster, pointer, camera, scene, particles) {
-    const time = ((.001 * performance.now()) % 12) / 12
-    const zigzagTime = (1 + (Math.sin(time * 2 * Math.PI))) / 6
 
     if (intersects.length > 0 && particles) {
         const particlesPosition = particles.geometry.attributes.position
@@ -106,7 +115,6 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
 
             let dx = mx - px
             let dy = my - py
-            const dz = mz - pz
 
             const mouseDistance = distanceCalc(mx, my, px, py)
             let d = (dx = mx - px) * dx + (dy = my - py) * dy
@@ -114,7 +122,6 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
 
 
             if (mouseDistance < 150) {
-                // console.log(mouseDistance)
                 const t = Math.atan2(dy, dx)
                 px += f * Math.cos(t)
                 py += f * Math.sin(t)
@@ -140,6 +147,68 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
 
 }
 
+function shufleParticles() {
+    if (particlesRandomTop) {
+        const particlesPosition = particlesRandomTop.geometry.attributes.position
+
+        for (var i = 0, l = particlesPosition.count; i < l; i++) {
+
+            let x = particlesPosition.getX(i)
+            let y = particlesPosition.getY(i)
+            let t = Math.atan2(y, x)
+            console.log(x, y)
+
+            //TODO: 0 zastąpić połową z granic
+            const axisXBoundry = [-100, 100]
+            const axisYBoundry = [-10, 80]
+
+            if (x >= 0 && x <= axisXBoundry[1]) {
+                x += Math.cos(t + 1)
+            }
+
+            if (x <= 0 && x >= axisXBoundry[0]) {
+                x += Math.cos(t - 1)
+            }
+
+            if (x > getRndInteger(-3, -1) && x < getRndInteger(3, 0)) {
+                x = getRndInteger(axisXBoundry[0] + 1, axisXBoundry[1] - 1)
+            }
+
+            if (x < -100 || x > axisXBoundry[1]) {
+                x = getRndInteger(axisXBoundry[0] / 4, axisXBoundry[1] / 4)
+            }
+
+
+            if (y > 0 && y <= axisYBoundry[1]) {
+                y += Math.sin(t + 1)
+            }
+
+            if (y < 0 && y >= axisYBoundry[0]) {
+                y += Math.sin(t - 1)
+            }
+
+            if (y > getRndInteger(-3, -1) && y < getRndInteger(3, 0)) {
+                y = getRndInteger(axisYBoundry[0] + 1, axisYBoundry[1] - 1)
+            }
+
+            if (y < axisYBoundry[0] || y > axisYBoundry[1]) {
+                y = getRndInteger(axisYBoundry[0] / 4, axisYBoundry[1] / 4)
+            }
+
+
+
+            particlesPosition.setXYZ(i, x, y, 1)
+            particlesPosition.needsUpdate = true
+        }
+    }
+}
+
+
+function asembleParticles() {
+    const particlesPosition = particles.geometry.attributes.position
+    const particlesPositionCopy = particlesCopy.attributes.position
+}
+
 const MainCanvas = () => {
     const [font, setFont] = useState(undefined)
 
@@ -163,7 +232,7 @@ const MainCanvas = () => {
 
             renderer.setPixelRatio(window.devicePixelRatio)
             renderer.setSize(window.innerWidth, window.innerHeight)
-            camera.position.setZ(50)
+            camera.position.setZ(90)
             camera.position.setY(30)
             renderer.render(scene, camera)
 
@@ -177,28 +246,29 @@ const MainCanvas = () => {
 
             const controls = new OrbitControls(camera, renderer.domElement)
 
-            const material = new THREE.PointsMaterial({ color: 0xffffff })
+            const material = new THREE.PointsMaterial({ color: 0xffffff, size: 1 })
 
 
             pointer = new THREE.Vector2()
 
             if (font) {
                 createText(font, material, scene)
+                setInterval(() => {
+                    shufleParticles()
+                }, 50)
             }
 
             function animate() {
                 window.addEventListener('pointermove', (event) => {
-                    clearTimeout(pointerMoving)
-                    pointerMoving = setTimeout(() => {
-                        onPointerMove(event)
-                    }, 1)
+                    onPointerMove(event)
 
                 })
                 requestAnimationFrame(animate)
 
                 raycaster.setFromCamera(pointer, camera) // update the picking ray with the camera and pointer position
                 intersects = raycaster.intersectObjects(scene.children)
-                moveParticles(raycaster, pointer, camera, scene, particles)
+                // moveParticles(raycaster, pointer, camera, scene, particles)
+
                 renderer.render(scene, camera)
             }
 
