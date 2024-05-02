@@ -32,14 +32,13 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min
 }
 
-function createText(font, material, scene) {
+function createText(font, material, scene, particlesNumber, txt, xPosition, yPosition) {
     const thePoints = []
-    const theRandomPoints = []
-    const shapes = font.generateShapes('TEST', 10)
+    const shapes = font.generateShapes(txt, 1)
     const geometry = new THREE.ShapeGeometry(shapes)
     geometry.computeBoundingBox()
-    const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x)
-    const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85
+    const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x) + xPosition
+    const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85 + yPosition
     let holeShapes = []
 
     for (let q = 0; q < shapes.length; q++) {
@@ -65,23 +64,16 @@ function createText(font, material, scene) {
 
         let shape = shapes[x]
 
-        const amountPoints = (shape.type == 'Path') ? 100 / 2 : 100
+        const amountPoints = (shape.type == 'Path') ? particlesNumber / 2 : particlesNumber
 
         const points = shape.getSpacedPoints(amountPoints)
 
         points.forEach((element, z) => {
-            const randomTop = new THREE.Vector3(getRndInteger(-100, 100), getRndInteger(40, 60))
             const a = new THREE.Vector3(element.x, element.y, 0)
             thePoints.push(a)
             sizes.push(1)
-            theRandomPoints.push(randomTop)
-
         })
     }
-
-    const geoParticlesRandom = new THREE.BufferGeometry().setFromPoints(theRandomPoints)
-    particlesRandomTop = new THREE.Points(geoParticlesRandom, material)
-    scene.add(particlesRandomTop)
 
     const geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints)
     geoParticles.translate(xMid, yMid, 0)
@@ -94,15 +86,26 @@ function createText(font, material, scene) {
     // scene.add(particles)
 }
 
+function createRandomParticles(material, scene, particlesNumber) {
+    const theRandomPoints = []
+
+    for (let index = 0; index < particlesNumber; index++) {
+        const randomTop = new THREE.Vector3(getRndInteger(-100, 100), getRndInteger(50, 60))
+        theRandomPoints.push(randomTop)
+    }
+
+    const geoParticlesRandom = new THREE.BufferGeometry().setFromPoints(theRandomPoints)
+    particlesRandomTop = new THREE.Points(geoParticlesRandom, material)
+    scene.add(particlesRandomTop)
+
+}
+
 function moveParticles(raycaster, pointer, camera, scene, particles) {
 
-    if (intersects.length > 0 && particles) {
-        const particlesPosition = particles.geometry.attributes.position
+    if (particlesRandomTop) {
+        const particlesPosition = particlesRandomTop.geometry.attributes.position
         const particlesPositionCopy = particlesCopy.attributes.position
 
-        const mx = intersects[0].point.x
-        const my = intersects[0].point.y
-        const mz = intersects[0].point.z
 
         for (var i = 0, l = particlesPosition.count; i < l; i++) {
             const initX = particlesPositionCopy.getX(i)
@@ -113,25 +116,34 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
             let py = particlesPosition.getY(i)
             let pz = particlesPosition.getZ(i)
 
-            let dx = mx - px
-            let dy = my - py
+            if (intersects?.length > 0) {
+                const mx = intersects[0].point.x
+                const my = intersects[0].point.y
+                const mz = intersects[0].point.z
 
-            const mouseDistance = distanceCalc(mx, my, px, py)
-            let d = (dx = mx - px) * dx + (dy = my - py) * dy
-            const f = - 150 / d
+                let dx = mx - px
+                let dy = my - py
 
 
-            if (mouseDistance < 150) {
-                const t = Math.atan2(dy, dx)
-                px += f * Math.cos(t)
-                py += f * Math.sin(t)
-
-                particlesPosition.setXYZ(i, px, py, pz)
-                particlesPosition.needsUpdate = true
+                const mouseDistance = distanceCalc(mx, my, px, py)
+                let d = (dx = mx - px) * dx + (dy = my - py) * dy
+                const f = - 150 / d
 
 
 
+                if (mouseDistance < 150) {
+                    const t = Math.atan2(dy, dx)
+                    px += f * Math.cos(t)
+                    py += f * Math.sin(t)
+
+                    particlesPosition.setXYZ(i, px, py, pz)
+                    particlesPosition.needsUpdate = true
+
+
+
+                }
             }
+
 
 
             px += (initX - px) * .05
@@ -147,7 +159,7 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
 
 }
 
-function shufleParticles() {
+function shufleParticles(randomActive) {
     if (particlesRandomTop) {
         const particlesPosition = particlesRandomTop.geometry.attributes.position
 
@@ -155,58 +167,55 @@ function shufleParticles() {
 
             let x = particlesPosition.getX(i)
             let y = particlesPosition.getY(i)
-            let t = Math.atan2(y, x)
-            console.log(x, y)
+            let t = Math.atan2(y - 50, x)
 
-            //TODO: 0 zastąpić połową z granic
-            const axisXBoundry = [-100, 100]
-            const axisYBoundry = [-10, 80]
 
-            if (x >= 0 && x <= axisXBoundry[1]) {
-                x += Math.cos(t + 1)
+            const axisXBoundry = [-70, 100]
+            const axisYBoundry = [40, 100]
+
+            const axisXMid = (axisXBoundry[0] + axisXBoundry[1]) / 2 + 80
+            const axisYMid = 90
+
+            if (randomActive) {
+                if (x >= axisXMid && x <= axisXBoundry[1]) {
+                    x += Math.cos(t + 100) - Math.cos(t + 100) / 1.5
+                }
+
+                if (x <= axisXMid && x >= axisXBoundry[0]) {
+                    if (x >= -1) {
+                        x += Math.cos(t - 100)
+                    } else {
+                        x += Math.cos(t + 7)
+                    }
+
+                }
+
+                y += x / 300 + 0.002
+
+
+                if (x > getRndInteger(axisXMid - 3, axisXMid - 1) && x < getRndInteger(axisXMid + 3, axisXMid)) {
+                    x = getRndInteger(axisXBoundry[0] + 1, axisXBoundry[1] - 1)
+                }
+
+                if (x < axisXBoundry[0] || x > axisXBoundry[1]) {
+                    x = getRndInteger(axisXBoundry[0] / 4, axisXBoundry[1] / 4)
+                }
+
+                if (y > getRndInteger(axisYMid - 3, axisYMid - 1) && y < getRndInteger(axisYMid + 3, axisYMid)) {
+                    y = getRndInteger(axisYBoundry[0] + 1, axisYBoundry[1] - 1)
+                }
+
+                if (y < axisYBoundry[0] || y > axisYBoundry[1]) {
+                    y = getRndInteger(axisYBoundry[0], axisYBoundry[1])
+                }
             }
-
-            if (x <= 0 && x >= axisXBoundry[0]) {
-                x += Math.cos(t - 1)
-            }
-
-            if (x > getRndInteger(-3, -1) && x < getRndInteger(3, 0)) {
-                x = getRndInteger(axisXBoundry[0] + 1, axisXBoundry[1] - 1)
-            }
-
-            if (x < -100 || x > axisXBoundry[1]) {
-                x = getRndInteger(axisXBoundry[0] / 4, axisXBoundry[1] / 4)
-            }
-
-
-            if (y > 0 && y <= axisYBoundry[1]) {
-                y += Math.sin(t + 1)
-            }
-
-            if (y < 0 && y >= axisYBoundry[0]) {
-                y += Math.sin(t - 1)
-            }
-
-            if (y > getRndInteger(-3, -1) && y < getRndInteger(3, 0)) {
-                y = getRndInteger(axisYBoundry[0] + 1, axisYBoundry[1] - 1)
-            }
-
-            if (y < axisYBoundry[0] || y > axisYBoundry[1]) {
-                y = getRndInteger(axisYBoundry[0] / 4, axisYBoundry[1] / 4)
-            }
-
 
 
             particlesPosition.setXYZ(i, x, y, 1)
             particlesPosition.needsUpdate = true
         }
+        return particlesPosition
     }
-}
-
-
-function asembleParticles() {
-    const particlesPosition = particles.geometry.attributes.position
-    const particlesPositionCopy = particlesCopy.attributes.position
 }
 
 const MainCanvas = () => {
@@ -224,6 +233,7 @@ const MainCanvas = () => {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
+            let randomActive = true
             const scene = new THREE.Scene()
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
             const renderer = new THREE.WebGLRenderer({
@@ -232,9 +242,12 @@ const MainCanvas = () => {
 
             renderer.setPixelRatio(window.devicePixelRatio)
             renderer.setSize(window.innerWidth, window.innerHeight)
-            camera.position.setZ(90)
-            camera.position.setY(30)
+            camera.position.setZ(45)
+            camera.position.setY(25)
             renderer.render(scene, camera)
+            const controls = new OrbitControls(camera, renderer.domElement)
+            controls.target = new THREE.Vector3(0, 25, 0)
+            controls.update()
 
             const pointLight = new THREE.PointLight(0xffffff)
             const ambientLight = new THREE.AmbientLight(0xffffff)
@@ -242,20 +255,26 @@ const MainCanvas = () => {
             const gridHelper = new THREE.GridHelper(200, 50)
             const axisHelper = new THREE.AxesHelper(60)
 
-            scene.add(lightHelper, gridHelper, axisHelper, ambientLight, pointLight)
+            scene.add(ambientLight)
 
-            const controls = new OrbitControls(camera, renderer.domElement)
-
-            const material = new THREE.PointsMaterial({ color: 0xffffff, size: 1 })
+            const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15 })
 
 
             pointer = new THREE.Vector2()
 
             if (font) {
-                createText(font, material, scene)
-                setInterval(() => {
-                    shufleParticles()
-                }, 50)
+                createText(font, material, scene, 100, 'DNO POLSKA S.A', 0, 40)
+                createRandomParticles(material, scene, 10000)
+                const interObj = setInterval(() => {
+                    shufleParticles(randomActive)
+                }, 25)
+
+                setTimeout(() => {
+                    randomActive = false
+                    clearInterval(interObj)
+                }, 2000)
+
+
             }
 
             function animate() {
@@ -264,10 +283,16 @@ const MainCanvas = () => {
 
                 })
                 requestAnimationFrame(animate)
-
+                controls.update()
                 raycaster.setFromCamera(pointer, camera) // update the picking ray with the camera and pointer position
                 intersects = raycaster.intersectObjects(scene.children)
-                // moveParticles(raycaster, pointer, camera, scene, particles)
+                if (!randomActive) {
+                    setTimeout(() => {
+                        moveParticles(raycaster, pointer, camera, scene, particles)
+                    }, 500)
+                }
+
+
 
                 renderer.render(scene, camera)
             }
@@ -278,7 +303,9 @@ const MainCanvas = () => {
 
 
     return (
-        <canvas id='canvas'></canvas>
+        <canvas id='canvas' >
+
+        </canvas>
     )
 }
 
