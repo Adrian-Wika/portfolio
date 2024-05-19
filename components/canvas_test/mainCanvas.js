@@ -34,7 +34,7 @@ function getRndInteger(min, max) {
 
 function createText(font, material, scene, particlesNumber, txt, xPosition, yPosition) {
     const thePoints = []
-    const shapes = font.generateShapes(txt, 1)
+    const shapes = font.generateShapes(txt, 0.9)
     const geometry = new THREE.ShapeGeometry(shapes)
     geometry.computeBoundingBox()
     const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x) + xPosition
@@ -83,7 +83,7 @@ function createText(font, material, scene, particlesNumber, txt, xPosition, yPos
     particlesCopy = new THREE.BufferGeometry()
     particlesCopy.copy(particles.geometry)
 
-    // scene.add(particles)
+    scene.add(particles)
 }
 
 function createRandomParticles(material, scene, particlesNumber) {
@@ -131,17 +131,17 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
 
 
 
-                if (mouseDistance < 150) {
-                    const t = Math.atan2(dy, dx)
-                    px += f * Math.cos(t)
-                    py += f * Math.sin(t)
+                // if (mouseDistance < 150) {
+                //     const t = Math.atan2(dy, dx)
+                //     px += f * Math.cos(t)
+                //     py += f * Math.sin(t)
 
-                    particlesPosition.setXYZ(i, px, py, pz)
-                    particlesPosition.needsUpdate = true
+                //     particlesPosition.setXYZ(i, px, py, pz)
+                //     particlesPosition.needsUpdate = true
 
 
 
-                }
+                // }
             }
 
 
@@ -159,7 +159,7 @@ function moveParticles(raycaster, pointer, camera, scene, particles) {
 
 }
 
-function shufleParticles(randomActive) {
+function shufleParticles(randomActive, initSpeed, speed) {
     if (particlesRandomTop) {
         const particlesPosition = particlesRandomTop.geometry.attributes.position
 
@@ -171,7 +171,7 @@ function shufleParticles(randomActive) {
 
 
             const axisXBoundry = [-70, 100]
-            const axisYBoundry = [40, 100]
+            const axisYBoundry = [-100, 100]
 
             const axisXMid = (axisXBoundry[0] + axisXBoundry[1]) / 2 + 80
             const axisYMid = 90
@@ -181,21 +181,12 @@ function shufleParticles(randomActive) {
                     x += Math.cos(t + 100) - Math.cos(t + 100) / 1.5
                 }
 
-                if (x <= axisXMid && x >= axisXBoundry[0]) {
-                    if (x >= -1) {
-                        x += Math.cos(t - 100)
-                    } else {
-                        x += Math.cos(t + 7)
-                    }
-
-                }
-
-                y += x / 300 + 0.002
+                y += x / initSpeed + speed
 
 
-                if (x > getRndInteger(axisXMid - 3, axisXMid - 1) && x < getRndInteger(axisXMid + 3, axisXMid)) {
-                    x = getRndInteger(axisXBoundry[0] + 1, axisXBoundry[1] - 1)
-                }
+                // if (x > getRndInteger(axisXMid - 3, axisXMid - 1) && x < getRndInteger(axisXMid + 3, axisXMid)) {
+                //     x = getRndInteger(axisXBoundry[0] + 1, axisXBoundry[1] - 1)
+                // }
 
                 if (x < axisXBoundry[0] || x > axisXBoundry[1]) {
                     x = getRndInteger(axisXBoundry[0] / 4, axisXBoundry[1] / 4)
@@ -220,6 +211,13 @@ function shufleParticles(randomActive) {
 
 const MainCanvas = () => {
     const [font, setFont] = useState(undefined)
+    let initSpeed = 0 // less is faster
+    let speed = 0.05
+
+    setTimeout(() => {
+        initSpeed = 900
+        speed = 0.0002
+    }, 35)
 
     useEffect(() => {
         const loader = new FontLoader()
@@ -263,23 +261,23 @@ const MainCanvas = () => {
             pointer = new THREE.Vector2()
 
             if (font) {
-                createText(font, material, scene, 100, 'DNO POLSKA S.A', 0, 40)
-                createRandomParticles(material, scene, 10000)
+                createText(font, material, scene, 100, 'DNO POLSKA S.A', 0, 57)
+                // createRandomParticles(material, scene, 10000)
                 const interObj = setInterval(() => {
-                    shufleParticles(randomActive)
+                    // shufleParticles(randomActive, initSpeed, speed)
                 }, 25)
 
                 setTimeout(() => {
                     randomActive = false
                     clearInterval(interObj)
-                }, 2000)
+                }, 5000)
 
 
             }
 
             function animate() {
                 window.addEventListener('pointermove', (event) => {
-                    onPointerMove(event)
+                    // onPointerMove(event)
 
                 })
                 requestAnimationFrame(animate)
