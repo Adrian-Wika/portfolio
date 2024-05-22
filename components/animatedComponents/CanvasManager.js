@@ -13,7 +13,7 @@ const MainCanvas = () => {
 
 
     return (
-        <div id='canvas' className='w-[100vw] h-[100vh]'>
+        <div id='canvas' className='w-[100vw] h-[100vh] overflow-hidden'>
 
         </div>
     )
