@@ -13,7 +13,7 @@ void main() {
   float angle = atan( pos.y, pos.x );
 
   vColor = vec4(0.5 + 0.45*sin(angle+time*0.4));
-  vColor = vec4(1.);
+  vColor = vec4(1.); // Kolor cząsteczek
 
   vec4 mvPosition = modelViewMatrix * vec4( vec3(pos.xy,0.), 1. );
   gl_PointSize = 1. * ( 1. / - mvPosition.z );
