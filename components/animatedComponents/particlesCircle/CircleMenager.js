@@ -22,7 +22,7 @@ export default class Circle {
     this.renderer = new THREE.WebGLRenderer()
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     this.renderer.setSize(this.width, this.height)
-    this.renderer.setClearColor(0x000000, 1)
+    this.renderer.setClearColor(0x000000, 0)
 
     this.raycaster = new THREE.Raycaster()
     this.pointer = new THREE.Vector2()
@@ -105,7 +105,7 @@ export default class Circle {
   }
 
   setupFBO() {
-    this.size = 256
+    this.size = 725
     this.fbo = this.getRenderTarget()
     this.fbo1 = this.getRenderTarget()
 
@@ -222,6 +222,10 @@ export default class Circle {
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
+
+    // Przesuń kamerę w prawo i bliżej
+    this.camera.position.x += 1.7 // Przesunięcie o 1 w prawo
+    this.camera.position.z -= 2.4 // Przesunięcie o 1 bliżej
 
     this.material.uniforms.uPositions.value = this.fboTexture
     this.points = new THREE.Points(geometry, this.material)
