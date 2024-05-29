@@ -137,15 +137,27 @@ void main()	{
 
 	vec3 targetPos = vec3(cos(angle), sin(angle), 0.0) * radius;
 
-	pos.xy += (targetPos.xy - pos.xy) * 0.1;
+	pos.xy += (targetPos.xy - pos.xy) * 0.04;
 
 
-	pos.xy += curl(pos.xyz*4., time*0.1, 0.1).xy * 0.006;
+	pos.xy += curl(pos.xyz*4., time*0.1, 0.1).xy * 0.003;
 
 
 	float dist = length(pos.xy - mouse);
 	vec2 dir = normalize(pos.xy - mouse);
 	pos.xy += dir * 0.1 * smoothstep(0.3,0.0,dist);
+
+    // Efekt światła
+    vec3 color = vec3(1.0, 0.8, 0.5);  // Kolor światła (żółtawy)
+    float intensity = 1.0 / (dist * dist);  // Intensywność światła malejąca wraz z odległością
+    color *= intensity;  // Zwiększenie jasności
+
+    // Dodanie poświaty
+    float glowRadius = 0.1;
+    float glowIntensity = 1.0;
+    float glow = exp(-pow(dist / glowRadius, 2.0)) * glowIntensity;
+
+    color += vec3(1.0, 0.8, 0.5) * glow;  // Dodanie poświaty
 
 	// pos.xy += vec2(0.001);
 	// vec2 newUV = (vUv - vec2(0.5))*resolution.zw + vec2(0.5);

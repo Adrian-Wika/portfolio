@@ -22,7 +22,7 @@ export default class Circle {
     this.renderer = new THREE.WebGLRenderer()
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     this.renderer.setSize(this.width, this.height)
-    this.renderer.setClearColor(0x000000, 0)
+    this.renderer.setClearColor(0x000000, 1)
 
     this.raycaster = new THREE.Raycaster()
     this.pointer = new THREE.Vector2()
@@ -249,8 +249,5 @@ export default class Circle {
     let temp = this.fbo
     this.fbo = this.fbo1
     this.fbo1 = temp
-
-    // this.renderer.setRenderTarget(null);
-    // this.renderer.render(this.fboScene, this.fboCamera);
   }
 }
