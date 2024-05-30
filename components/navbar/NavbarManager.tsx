@@ -3,6 +3,7 @@ import { useMediaQuery } from '@mantine/hooks'
 import { IconCode, IconComponents, IconHome } from '@tabler/icons-react'
 import { MainContext } from '../../pages'
 import { useContext } from 'react'
+import Image from 'next/image'
 
 const NavbarManager = ({ opened, toggle }: {
     opened: boolean
@@ -20,7 +21,13 @@ const NavbarManager = ({ opened, toggle }: {
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                     <Group justify="space-between" style={{ flex: 1 }}>
                         <Group ml="xl" gap={0} visibleFrom="sm">
-                            LOGO
+                            <Image
+                                onClick={() => setActivePage('home')}
+                                className='cursor-pointer'
+                                src={'/logoAW.png'}
+                                width={150}
+                                height={50}
+                                alt={'Logo'} />
                         </Group>
                         <Group visibleFrom="sm" justify="center" gap={40} className='text-xs'>
                             <div className='border-b-expand hover:border-b-0 flex justify-end pb-1 '>
