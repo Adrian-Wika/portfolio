@@ -17,6 +17,8 @@ export default class Circle {
     this.scene = new THREE.Scene()
 
     this.container = options.dom
+    this.performanceTier = options.performanceTier
+    this.isMobile = options.isMobile
     this.width = this.container.offsetWidth
     this.height = this.container.offsetHeight
     this.renderer = new THREE.WebGLRenderer()
@@ -101,7 +103,13 @@ export default class Circle {
   }
 
   setupFBO() {
-    this.size = 725
+    const defaultSize = this.isMobile ? 115 : 233
+    const properSize = defaultSize * this.performanceTier
+    this.size = properSize > 1000 ? 1000 : properSize
+
+    console.log('Particles count after calc:', this.size)
+
+
     this.fbo = this.getRenderTarget()
     this.fbo1 = this.getRenderTarget()
 
