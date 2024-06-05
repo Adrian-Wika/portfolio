@@ -20,7 +20,8 @@ const MainCanvas = () => {
             new Circle({
                 dom: document.getElementById("canvas"),
                 performanceTier: performanceObj.tier,
-                isMobile: performanceObj.isMobile
+                isMobile: performanceObj.isMobile,
+                fps: performanceObj.fps
             })
 
     }, [performanceObj])
