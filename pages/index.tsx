@@ -5,6 +5,7 @@ import MainCanvas from '../components/animatedComponents/CanvasManager'
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import HomeManager from '../components/content/home/HomeManager'
 import TechnologiesManager from '../components/content/technologies/TechnologiesManager'
+import ContactManager from '../components/content/contact/ContactManager'
 
 type pages = 'home' | 'contact' | 'projects' | 'technologies'
 
@@ -19,7 +20,7 @@ const PageSwitch = ({ page }: { page: pages }) => {
     case 'home':
       return <HomeManager />
     case 'contact':
-      return <div>contact</div>
+      return <ContactManager />
     case 'projects':
       return <div>projects</div>
     case 'technologies':

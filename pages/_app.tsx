@@ -1,10 +1,11 @@
-import "../styles/globals.css"
+import { MantineProvider } from "@mantine/core"
 import "@mantine/core/styles.css"
 import Head from "next/head"
-import { MantineProvider } from "@mantine/core"
+import "../styles/globals.css"
 import { theme } from "../theme"
 
 export default function App({ Component, pageProps }: any) {
+
   return (
     <MantineProvider theme={theme} defaultColorScheme="dark">
       <Head>
