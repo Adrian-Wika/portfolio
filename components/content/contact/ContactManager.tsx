@@ -17,7 +17,7 @@ const ContactManager = () => {
 
                 </div>
                 <div className='flex justify-center gap-5'>
-                    <a className='flex flex-row gap-3 w-fit items-center hover:text-[#1971c2] duration-300' href='www.linkedin.com/in/adrian-wika-19593a253' target="_blank" rel="noopener noreferrer">
+                    <a className='flex flex-row gap-3 w-fit items-center hover:text-[#1971c2] duration-300' href='https://www.linkedin.com/in/adrian-wika-19593a253' target="_blank" rel="noopener noreferrer">
                         <IconBrandLinkedin size={40} />
                     </a>
                     <a className='flex flex-row gap-3 w-fit items-center hover:text-[#1971c2] duration-300' href='mailto:awika157@gmail.com' target="_blank" rel="noopener noreferrer">
