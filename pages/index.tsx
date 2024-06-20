@@ -6,6 +6,7 @@ import { createContext, Dispatch, SetStateAction, useEffect, useState } from 're
 import HomeManager from '../components/content/home/HomeManager'
 import TechnologiesManager from '../components/content/technologies/TechnologiesManager'
 import ContactManager from '../components/content/contact/ContactManager'
+import ProjectsManager from '../components/content/projects/ProjectsManager'
 
 type pages = 'home' | 'contact' | 'projects' | 'technologies'
 
@@ -22,7 +23,7 @@ const PageSwitch = ({ page }: { page: pages }) => {
     case 'contact':
       return <ContactManager />
     case 'projects':
-      return <div>projects</div>
+      return <ProjectsManager />
     case 'technologies':
       return <TechnologiesManager />
 
@@ -44,16 +45,14 @@ export default function IndexPage() {
       >
         <NavbarManager {...{ opened, toggle }} />
       </AppShell>
-      <div>
-        <div className='flex justify-center h-[100vh] items-center  mx-[10px] md:justify-end md:mr-[10vw]'>
+      <div className='w-[100vw]'>
+        <div className='flex justify-center mt-[10%] items-center mx-[10px] md:justify-end md:mr-[10vw]'>
           <PageSwitch page={activePage} />
         </div>
-        <div className=' absolute top-0 left-0 z-[-1]'>
+        <div className=' absolute top-0 left-0 z-[-10]'>
           <MainCanvas />
         </div>
       </div>
     </MainContext.Provider>
-
-
   )
 }

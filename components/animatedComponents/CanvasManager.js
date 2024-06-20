@@ -10,7 +10,6 @@ const MainCanvas = () => {
     useEffect(() => {
         if (!performanceObj)
             getGPUTier().then((value) => {
-                console.log(value)
                 setPerformanceObj(value)
             })
     }, [])
