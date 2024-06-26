@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import Circle from './particlesCircle/CircleMenager'
 import { getGPUTier } from 'detect-gpu'
 
-const MainCanvas = () => {
+const MainCanvas = ({ showCanvas }) => {
     const [performanceObj, setPerformanceObj] = useState(undefined)
-
-
 
     useEffect(() => {
         if (!performanceObj)
@@ -25,10 +23,8 @@ const MainCanvas = () => {
 
     }, [performanceObj])
 
-
-
     return (
-        <div id='canvas' className='gradient-background w-[100vw] h-[100vh] overflow-hidden' />
+        <div id='canvas' className=' w-[100vw] h-[100%] overflow-hidden' />
     )
 }
 

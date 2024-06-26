@@ -46,15 +46,17 @@ export default class Circle {
     this.dracoLoader = new DRACOLoader(new THREE.LoadingManager()).setDecoderPath(`${THREE_PATH}/examples/jsm/libs/draco/gltf/`)
     this.gltfLoader = new GLTFLoader()
     this.gltfLoader.setDRACOLoader(this.dracoLoader)
-
+    // this.renderer.dispose()
+    // this.renderer.clear()
+    // this.renderer.info.reset()
     this.isPlaying = true
     this.setupEvents()
     this.setupFBO()
     this.addObjects()
     this.resize()
     this.render()
-    this.setupResize()
-    // this.setUpSettings();
+    // this.setupResize()
+    // this.setUpSettings()
   }
 
   setupEvents() {
@@ -90,7 +92,10 @@ export default class Circle {
   }
 
   setupResize() {
-    window.addEventListener("resize", this.resize.bind(this))
+    window.addEventListener("resize", () => {
+      this.resize.bind(this)
+      // this.setupEvents()
+    })
   }
 
   getRenderTarget() {

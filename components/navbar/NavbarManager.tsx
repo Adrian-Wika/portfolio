@@ -23,7 +23,7 @@ const NavbarManager = ({ opened, toggle }: {
     return (
         <>
             <AppShell.Header
-                style={{ backgroundColor: 'transparent', backdropFilter: 'blur(10px)', userSelect: 'none' }}
+                style={{ backgroundColor: 'transparent', backdropFilter: 'blur(10px)', userSelect: 'none', maxWidth: 1920, margin: 'auto' }}
             >
                 <Group h="100%" px="md">
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />

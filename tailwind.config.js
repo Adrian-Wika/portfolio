@@ -10,6 +10,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+        paddingLeft: '1rem',
+      },
       keyframes: {
         expand: {
           '0%': { width: '0%' },
