@@ -62,10 +62,10 @@ export default function IndexPage() {
 
   useEffect(() => {
     setInterval(() => {
-      if (typeof window !== 'undefined') {
-        adjustBackgroundSize()
-        ensureSingleCanvas()
-      }
+      // if (typeof window !== 'undefined') {
+      adjustBackgroundSize()
+      ensureSingleCanvas()
+      // }
     }, 1)
   }, [])
 
