@@ -1,13 +1,12 @@
 import { AppShell } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import NavbarManager from '../components/navbar/NavbarManager'
-import MainCanvas from '../components/animatedComponents/CanvasManager'
+import dynamic from 'next/dynamic'
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from 'react'
-import HomeManager from '../components/content/home/HomeManager'
-import TechnologiesManager from '../components/content/technologies/TechnologiesManager'
 import ContactManager from '../components/content/contact/ContactManager'
+import HomeManager from '../components/content/home/HomeManager'
 import ProjectsManager from '../components/content/projects/ProjectsManager'
-import { Suspense } from 'react'
+import TechnologiesManager from '../components/content/technologies/TechnologiesManager'
+import NavbarManager from '../components/navbar/NavbarManager'
 
 type pages = 'home' | 'contact' | 'projects' | 'technologies'
 
@@ -69,6 +68,10 @@ export default function IndexPage() {
     }, 1)
   }, [])
 
+  const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
+    ssr: false,
+  })
+
 
   return (
     <div>
@@ -94,9 +97,7 @@ export default function IndexPage() {
       </div>
 
       <div id='bg' className='absolute top-0 left-0 z-[-10] h-[100%] gradient-background'>
-        <Suspense>
-          <MainCanvas />
-        </Suspense>
+        <MainCanvas />
       </div>
     </div>
   )
