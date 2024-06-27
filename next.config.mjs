@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
+  productionBrowserSourceMaps: true,
   swcMinify: false,
   webpack: (config) => {
     config.module.rules.push({
