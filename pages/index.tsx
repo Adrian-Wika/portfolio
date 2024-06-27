@@ -1,3 +1,4 @@
+'use client'
 import { AppShell } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import dynamic from 'next/dynamic'
