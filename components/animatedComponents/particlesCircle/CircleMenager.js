@@ -1,15 +1,12 @@
 import * as THREE from "three"
 import { REVISION } from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import fragment from "./shaders/fragment.glsl"
 import vertex from "./shaders/vertexParticles.glsl"
 
 import simFragment from "./shaders/simFragment.glsl"
 import simVertex from "./shaders/simVertex.glsl"
-import GUI from 'lil-gui'
-import gsap from "gsap"
 
 
 export default class Circle {
