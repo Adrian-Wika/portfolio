@@ -60,14 +60,14 @@ export default function IndexPage() {
   const [activePage, setActivePage] = useState('home' as pages)
   const [opened, { toggle }] = useDisclosure()
 
-  useEffect(() => {
-    setInterval(() => {
-      if (typeof window !== 'undefined') {
-        adjustBackgroundSize()
-        ensureSingleCanvas()
-      }
-    }, 1)
-  }, [])
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     if (typeof window !== 'undefined') {
+  //       adjustBackgroundSize()
+  //       ensureSingleCanvas()
+  //     }
+  //   }, 1)
+  // }, [])
 
   const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
     ssr: false,
