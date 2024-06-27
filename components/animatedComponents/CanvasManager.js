@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import Circle from './particlesCircle/CircleMenager'
 import { getGPUTier } from 'detect-gpu'
