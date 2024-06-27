@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Circle from './particlesCircle/CircleMenager'
 import { getGPUTier } from 'detect-gpu'
 
-const MainCanvas = ({ showCanvas }) => {
+const MainCanvas = () => {
     const [performanceObj, setPerformanceObj] = useState(undefined)
 
     useEffect(() => {

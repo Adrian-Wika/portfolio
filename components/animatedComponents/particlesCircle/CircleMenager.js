@@ -15,7 +15,6 @@ import gsap from "gsap"
 export default class Circle {
   constructor(options) {
     this.scene = new THREE.Scene()
-
     this.container = options.dom
     this.performanceTier = options.performanceTier
     this.isMobile = options.isMobile
@@ -46,17 +45,27 @@ export default class Circle {
     this.dracoLoader = new DRACOLoader(new THREE.LoadingManager()).setDecoderPath(`${THREE_PATH}/examples/jsm/libs/draco/gltf/`)
     this.gltfLoader = new GLTFLoader()
     this.gltfLoader.setDRACOLoader(this.dracoLoader)
-    // this.renderer.dispose()
-    // this.renderer.clear()
-    // this.renderer.info.reset()
+
     this.isPlaying = true
     this.setupEvents()
     this.setupFBO()
     this.addObjects()
-    this.resize()
     this.render()
-    // this.setupResize()
-    // this.setUpSettings()
+  }
+
+  clearScene() {
+    while (this.scene.children.length > 0) {
+      var object = this.scene.children[0]
+      if (object.geometry) object.geometry.dispose()
+      if (object.material) {
+        if (Array.isArray(object.material)) {
+          object.material.forEach(material => material.dispose())
+        } else {
+          object.material.dispose()
+        }
+      }
+      this.scene.remove(object)
+    }
   }
 
   setupEvents() {
@@ -80,21 +89,6 @@ export default class Circle {
         this.fboMaterial.uniforms.uMouse.value = new THREE.Vector2(x, y)
         this.ball.position.set(x, y, 0)
       }
-    })
-  }
-
-  setUpSettings() {
-    this.settings = {
-      progress: 0,
-    }
-    this.gui = new GUI()
-    this.gui.add(this.settings, "progress", 0, 1, 0.01).onChange((val) => { })
-  }
-
-  setupResize() {
-    window.addEventListener("resize", () => {
-      this.resize.bind(this)
-      // this.setupEvents()
     })
   }
 
@@ -258,6 +252,11 @@ export default class Circle {
     this.renderer.setRenderTarget(null)
     this.renderer.render(this.scene, this.camera)
 
+    // Update size for resize action
+    this.width = this.container.offsetWidth
+    this.height = this.container.offsetHeight
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    this.renderer.setSize(this.width, this.height)
 
     // swap render targets
     let temp = this.fbo

@@ -55,11 +55,8 @@ function ensureSingleCanvas() {
   }
 }
 
-let timeoutID: number | undefined
-
 export default function IndexPage() {
   const [activePage, setActivePage] = useState('home' as pages)
-  const [showCanvas, setShowCanvas] = useState(true)
   const [opened, { toggle }] = useDisclosure()
 
   useEffect(() => {
@@ -69,23 +66,7 @@ export default function IndexPage() {
         ensureSingleCanvas()
       }
     }, 1)
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener("resize", () => {
-        clearTimeout(timeoutID)
-        timeoutID = setTimeout(() => {
-          if (showCanvas)
-            setShowCanvas(false)
-        }, 500) as unknown as number
-      })
-    }
   }, [])
-
-  useEffect(() => {
-    if (showCanvas === false) {
-      setShowCanvas(true)
-    }
-  }, [showCanvas])
 
 
   return (
@@ -112,9 +93,7 @@ export default function IndexPage() {
       </div>
 
       <div id='bg' className='absolute top-0 left-0 z-[-10] h-[100%] gradient-background'>
-        {showCanvas && (
-          <MainCanvas showCanvas={showCanvas} />
-        )}
+        <MainCanvas />
       </div>
     </div>
   )
