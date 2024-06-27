@@ -7,6 +7,7 @@ import HomeManager from '../components/content/home/HomeManager'
 import TechnologiesManager from '../components/content/technologies/TechnologiesManager'
 import ContactManager from '../components/content/contact/ContactManager'
 import ProjectsManager from '../components/content/projects/ProjectsManager'
+import { Suspense } from 'react'
 
 type pages = 'home' | 'contact' | 'projects' | 'technologies'
 
@@ -93,7 +94,9 @@ export default function IndexPage() {
       </div>
 
       <div id='bg' className='absolute top-0 left-0 z-[-10] h-[100%] gradient-background'>
-        <MainCanvas />
+        <Suspense>
+          <MainCanvas />
+        </Suspense>
       </div>
     </div>
   )
