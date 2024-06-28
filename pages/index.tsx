@@ -92,7 +92,7 @@ export default function IndexPage() {
         </div>
       </div>
 
-      <div id='bg' className='absolute top-0 left-0 z-[-10] h-[100%] gradient-background'>
+      <div id='bg' className='!absolute !top-0 !left-0 !z-[-10] !h-[100%] gradient-background'>
         <MainCanvas />
       </div>
     </div>

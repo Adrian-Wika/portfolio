@@ -24,7 +24,7 @@ const MainCanvas = () => {
     }, [performanceObj])
 
     return (
-        <div id='canvas' className=' w-[100vw] h-[100%] overflow-hidden' />
+        <div id='canvas' className=' !w-[100vw] !h-[100%] overflow-hidden' />
     )
 }
 
