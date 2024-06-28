@@ -63,15 +63,15 @@ export default function IndexPage() {
   useEffect(() => {
     setInterval(() => {
       // if (typeof window !== 'undefined') {
-      adjustBackgroundSize()
-      ensureSingleCanvas()
+      // adjustBackgroundSize()
+      // ensureSingleCanvas()
       // }
     }, 1)
   }, [])
 
-  const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
-    ssr: false,
-  })
+  // const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
+  //   ssr: false,
+  // })
 
 
   return (
