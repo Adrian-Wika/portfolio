@@ -8,6 +8,7 @@ import HomeManager from '../components/content/home/HomeManager'
 import ProjectsManager from '../components/content/projects/ProjectsManager'
 import TechnologiesManager from '../components/content/technologies/TechnologiesManager'
 import NavbarManager from '../components/navbar/NavbarManager'
+import { track } from '@vercel/analytics/react'
 
 type pages = 'home' | 'contact' | 'projects' | 'technologies'
 
@@ -23,12 +24,16 @@ export const MainContext = createContext({} as {
 const PageSwitch = ({ page }: { page: pages }) => {
   switch (page) {
     case 'home':
+      track('Hompage visit')
       return <HomeManager />
     case 'contact':
+      track('Contact page visit')
       return <ContactManager />
     case 'projects':
+      track('Projects page visit')
       return <ProjectsManager />
     case 'technologies':
+      track('Technologies page visit')
       return <TechnologiesManager />
 
     default:
