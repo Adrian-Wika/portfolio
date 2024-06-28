@@ -63,7 +63,7 @@ export default function IndexPage() {
   // useEffect(() => {
   //   // setInterval(() => {
   //   //   // if (typeof window !== 'undefined') {
-  //   //   // adjustBackgroundSize()     "@vercel/analytics": "^1.3.1",
+  //   //   // adjustBackgroundSize()     
   //   //   // ensureSingleCanvas()
   //   //   // }
   //   // }, 1)
