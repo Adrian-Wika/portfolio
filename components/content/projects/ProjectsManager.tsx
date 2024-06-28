@@ -13,13 +13,15 @@ function AccordionLabel({ label, image, description, status }: AccordionLabelPro
     return (
         <Group wrap="nowrap">
             <Avatar src={image} radius="xl" size="lg" />
-            <div>
-                <Text className="flex flex-row gap-2 items-center">
-                    {label}
+            <div className="w-full">
+                <div className=" flex gap-2 w-full items-center flex-wrap">
+                    <Text>
+                        {label}
+                    </Text>
                     {status && (
                         <Badge size="xs" color="blue">{status}</Badge>
                     )}
-                </Text>
+                </div>
                 <Text size="sm" c="dimmed" fw={400} className="flex flex-col">
                     {description}
                 </Text>
@@ -42,10 +44,10 @@ const ProjectsManager = () => {
     ))
 
     return (
-        <div className="mt-[1vh]">
+        <div className=" mt-[-80px] md:mt-[0px]">
             <div className="bg-transparent backdrop-blur-md p-5 rounded-lg shadow-lg max-w-lg text-center">
-                <h1 className="text-2xl md:text-5xl font-bold mb-4">Projekty w których brałem udział:</h1>
-                <div className=" max-h-[500px] overflow-auto">
+                <h1 className="text-2xl md:text-3xl font-bold mb-4">Projekty w których brałem udział:</h1>
+                <div className=" max-h-[60vh] overflow-auto">
                     <Accordion chevronPosition="right" variant="contained">
                         {items}
                     </Accordion>

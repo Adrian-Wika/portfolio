@@ -100,9 +100,9 @@ export default class Circle {
   }
 
   setupFBO() {
-    const defaultSize = this.isMobile ? 3 : 7
+    const defaultSize = this.isMobile ? 5 : 7
     const properSize = defaultSize * this.fps
-    this.size = properSize > 1000 ? 1000 : properSize
+    this.size = (properSize > 1000 ? 1000 : properSize) ?? 600
 
     console.log('Particles count after calc:', this.size)
 
@@ -225,7 +225,7 @@ export default class Circle {
     geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
 
     // Przesuń kamerę w prawo i bliżej
-    this.camera.position.x += 1.7 // Przesunięcie o 1 w prawo
+    this.camera.position.x += this.isMobile ? 1.3 : 1.6 // Przesunięcie o 1 w prawo 
     this.camera.position.z -= 2.4 // Przesunięcie o 1 bliżej
 
     this.material.uniforms.uPositions.value = this.fboTexture

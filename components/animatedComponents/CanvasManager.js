@@ -19,9 +19,8 @@ const MainCanvas = () => {
                 dom: document.getElementById("canvas"),
                 performanceTier: performanceObj.tier,
                 isMobile: performanceObj.isMobile,
-                fps: performanceObj.fps
+                fps: performanceObj.fps ?? 60
             })
-
     }, [performanceObj])
 
     return (

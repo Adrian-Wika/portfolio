@@ -69,13 +69,9 @@ export default function IndexPage() {
     }, 1)
   }, [])
 
-  // const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
-  //   ssr: false,
-  // })
-
   return (
     <div>
-      <div id='content' className="flex items-center justify-center min-h-screen lg:mt-0">
+      <div id='content' className="flex items-center justify-center min-h-screen mt-0">
         <div className='container mx-auto'>
           <MainContext.Provider value={{ activePage, setActivePage }}>
             <AppShell
@@ -85,8 +81,8 @@ export default function IndexPage() {
             >
               <NavbarManager {...{ opened, toggle }} />
               <AppShell.Main>
-                <div className=' mt-[0px] sm:mt-[85px]'>
-                  <div className='flex justify-center scale-[80%] sm:scale-100 lg:justify-end'>
+                <div className='mt-0 md:mt-[10vh]'>
+                  <div className='flex justify-center scale-[80%] md:scale-100 lg:justify-end'>
                     <PageSwitch page={activePage} />
                   </div>
                 </div>

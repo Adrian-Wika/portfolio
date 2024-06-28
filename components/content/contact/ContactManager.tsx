@@ -4,9 +4,9 @@ import React from 'react'
 const ContactManager = () => {
 
     return (
-        <div className="mt-[1vh]">
+        <div>
             <div className="bg-transparent backdrop-blur-md p-5 rounded-lg shadow-lg max-w-lg text-center">
-                <h1 className="text-2xl md:text-5xl font-bold mb-4">Kontakt:</h1>
+                <h1 className="text-2xl md:text-4xl font-bold mb-4">Kontakt:</h1>
                 <div className='flex flex-col justify-center justify-items-center mb-5'>
                     <p>Adrian Wika</p>
                     <p>✆ 669142326</p>

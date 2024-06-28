@@ -7,10 +7,10 @@ const TechnologiesManager = () => {
     const itemGroupClass = 'flex flex-col gap-2'
 
     return (
-        <div className="mt-[1vh]">
+        <div >
             <div className="bg-transparent backdrop-blur-md p-5 rounded-lg shadow-lg max-w-lg text-center">
                 <h1 className="text-2xl md:text-3xl font-bold mb-7 md:whitespace-nowrap">Technologie z którymi pracowałem:</h1>
-                <div className='flex flex-row flex-wrap gap-5 justify-center'>
+                <div className='flex flex-row  gap-5 justify-center'>
                     <div className={itemGroupClass}>
                         <a className={itemClass} href='https://react.dev/' target="_blank" rel="noopener noreferrer">
                             <IconBrandReact />

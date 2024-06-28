@@ -23,7 +23,7 @@ const NavbarManager = ({ opened, toggle }: {
     return (
         <>
             <AppShell.Header
-                style={{ backgroundColor: 'transparent', backdropFilter: 'blur(10px)', userSelect: 'none', maxWidth: 1920, margin: 'auto' }}
+                style={{ backgroundColor: 'transparent', backdropFilter: 'blur(10px)', userSelect: 'none', maxWidth: 1920, margin: 'auto', WebkitBackdropFilter: 'blur(10px)' }}
             >
                 <Group h="100%" px="md">
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
@@ -72,7 +72,7 @@ const NavbarManager = ({ opened, toggle }: {
                 </Group>
             </AppShell.Header>
 
-            <AppShell.Navbar py="md" px={4} style={{ backgroundColor: 'transparent', backdropFilter: 'blur(10px)' }} className='flex gap-5'>
+            <AppShell.Navbar py="md" px={4} style={{ backgroundColor: 'transparent', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }} className='flex gap-5'>
                 <Button variant="outline" leftSection={<IconHome size={20} />} onClick={() => handleClick('home')}>Strona główna</Button>
                 <Button variant="outline" leftSection={<IconComponents size={20} />} onClick={() => handleClick('projects')}>Projekty</Button>
                 <Button variant="outline" leftSection={<IconCode size={20} />} onClick={() => handleClick('technologies')}>Technologie</Button>
