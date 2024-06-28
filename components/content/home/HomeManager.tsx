@@ -3,7 +3,7 @@ import { IconBrandReact, IconBrandNextjs, IconBrandJavascript } from '@tabler/ic
 const HomeManager = () => {
     return (
         <div>
-            <div className="bg-transparent backdrop-blur-md  rounded-lg shadow-lg max-w-lg text-center">
+            <div className="bg-transparent backdrop-blur-md p-2 rounded-lg shadow-lg max-w-lg text-center">
                 <h1 className="text-2xl md:text-5xl font-bold mb-4">Adrian Wika</h1>
                 <h2 className="text-xl md:text-2xl font-medium mb-6">Front-End Developer</h2>
                 <div>

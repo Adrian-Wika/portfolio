@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  productionBrowserSourceMaps: true,
-  swcMinify: false,
-  output: 'standalone',
+  reactStrictMode: true,
+  // productionBrowserSourceMaps: true,
+  swcMinify: true,
+  // output: 'standalone',
   webpack: (config) => {
     config.module.rules.push({
       test: /\.glsl$|\.frag$|\.vert$/i,
