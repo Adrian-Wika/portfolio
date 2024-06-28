@@ -7,6 +7,7 @@ export default function Document() {
     <Html lang="pl">
       <Head>
         <ColorSchemeScript />
+        <meta name="color-scheme" content="dark"></meta>
       </Head>
       <body>
         <Main />
