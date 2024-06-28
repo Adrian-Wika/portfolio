@@ -7,7 +7,8 @@ export default function Document() {
     <Html lang="pl">
       <Head>
         <ColorSchemeScript />
-        <meta name="color-scheme" content="dark"></meta>
+        <meta name="prefers-color-scheme" content="dark"></meta>
+        <meta name="darkreader-lock" content="dark"></meta>
       </Head>
       <body>
         <Main />
