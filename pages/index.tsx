@@ -1,8 +1,8 @@
 'use client'
 import { AppShell } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import dynamic from 'next/dynamic'
 import { createContext, Dispatch, SetStateAction, useEffect, useState } from 'react'
+import MainCanvas from '../components/animatedComponents/CanvasManager'
 import ContactManager from '../components/content/contact/ContactManager'
 import HomeManager from '../components/content/home/HomeManager'
 import ProjectsManager from '../components/content/projects/ProjectsManager'
@@ -60,26 +60,24 @@ export default function IndexPage() {
   const [activePage, setActivePage] = useState('home' as pages)
   const [opened, { toggle }] = useDisclosure()
 
-  // useEffect(() => {
-  //   // setInterval(() => {
-  //   //   // if (typeof window !== 'undefined') {
-  //   //   // adjustBackgroundSize()     
-  //   //   // ensureSingleCanvas()
-  //   //   // }
-  //   // }, 1)
-  // }, [])
+  useEffect(() => {
+    setInterval(() => {
+      if (typeof window !== 'undefined') {
+        adjustBackgroundSize()
+        ensureSingleCanvas()
+      }
+    }, 1)
+  }, [])
 
   // const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
   //   ssr: false,
   // })
 
-  return <div>???1?</div>
-
   return (
     <div>
       <div id='content' className="flex items-center justify-center min-h-screen lg:mt-0">
         <div className='container mx-auto'>
-          {/* <MainContext.Provider value={{ activePage, setActivePage }}>
+          <MainContext.Provider value={{ activePage, setActivePage }}>
             <AppShell
               header={{ height: 60 }}
               navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
@@ -94,12 +92,12 @@ export default function IndexPage() {
                 </div>
               </AppShell.Main>
             </AppShell>
-          </MainContext.Provider> */}
+          </MainContext.Provider>
         </div>
       </div>
 
       <div id='bg' className='absolute top-0 left-0 z-[-10] h-[100%] gradient-background'>
-        {/* <MainCanvas /> */}
+        <MainCanvas />
       </div>
     </div>
   )
