@@ -44,7 +44,7 @@ const ProjectsManager = () => {
     ))
 
     return (
-        <div className=" mt-[-80px] md:mt-[0px]">
+        <div className=" mt-[-50px] md:mt-[0px]">
             <div className="bg-transparent backdrop-blur-md p-5 rounded-lg shadow-lg max-w-lg text-center">
                 <h1 className="text-2xl md:text-3xl font-bold mb-4">Projekty w których brałem udział:</h1>
                 <div className=" max-h-[60vh] overflow-auto">
