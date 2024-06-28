@@ -78,7 +78,7 @@ export default function IndexPage() {
     <div>
       <div id='content' className="flex items-center justify-center min-h-screen lg:mt-0">
         <div className='container mx-auto'>
-          <MainContext.Provider value={{ activePage, setActivePage }}>
+          {/* <MainContext.Provider value={{ activePage, setActivePage }}>
             <AppShell
               header={{ height: 60 }}
               navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
@@ -93,7 +93,7 @@ export default function IndexPage() {
                 </div>
               </AppShell.Main>
             </AppShell>
-          </MainContext.Provider>
+          </MainContext.Provider> */}
         </div>
       </div>
 
