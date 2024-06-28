@@ -7,7 +7,7 @@ export function VercelDataCollector() {
     const router = useRouter()
 
     return <div>
-        <Analytics />
+        <Analytics mode={'production'} />
         <SpeedInsights route={router.pathname} />
     </div>
 }
