@@ -60,19 +60,20 @@ export default function IndexPage() {
   const [activePage, setActivePage] = useState('home' as pages)
   const [opened, { toggle }] = useDisclosure()
 
-  useEffect(() => {
-    setInterval(() => {
-      // if (typeof window !== 'undefined') {
-      // adjustBackgroundSize()     "@vercel/analytics": "^1.3.1",
-      // ensureSingleCanvas()
-      // }
-    }, 1)
-  }, [])
+  // useEffect(() => {
+  //   // setInterval(() => {
+  //   //   // if (typeof window !== 'undefined') {
+  //   //   // adjustBackgroundSize()     "@vercel/analytics": "^1.3.1",
+  //   //   // ensureSingleCanvas()
+  //   //   // }
+  //   // }, 1)
+  // }, [])
 
   // const MainCanvas = dynamic(() => import('../components/animatedComponents/CanvasManager'), {
   //   ssr: false,
   // })
 
+  return <div>????</div>
 
   return (
     <div>
@@ -98,7 +99,7 @@ export default function IndexPage() {
       </div>
 
       <div id='bg' className='absolute top-0 left-0 z-[-10] h-[100%] gradient-background'>
-        {/* <MainCanvas /> */}
+        <MainCanvas />
       </div>
     </div>
   )
