@@ -3,6 +3,7 @@ import "@mantine/core/styles.css"
 import Head from "next/head"
 import "../styles/globals.css"
 import { theme } from "../theme"
+import { VercelDataCollector } from '../components/Analitycs'
 
 export default function App({ Component, pageProps }: any) {
 
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }: any) {
         <link rel="shortcut icon" href="/favicon.png" />
       </Head>
       <Component {...pageProps} />
+      <VercelDataCollector />
     </MantineProvider>
   )
 }

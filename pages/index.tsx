@@ -17,6 +17,9 @@ export const MainContext = createContext({} as {
 })
 
 
+
+
+
 const PageSwitch = ({ page }: { page: pages }) => {
   switch (page) {
     case 'home':
@@ -61,6 +64,7 @@ export default function IndexPage() {
   const [opened, { toggle }] = useDisclosure()
 
   useEffect(() => {
+
     setInterval(() => {
       if (typeof window !== 'undefined') {
         adjustBackgroundSize()
