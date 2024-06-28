@@ -104,7 +104,7 @@ export default class Circle {
     const properSize = defaultSize * this.fps
     this.size = (properSize > 1000 ? 1000 : properSize) ?? 600
 
-    console.log('Particles count after calc:', this.size)
+    // console.log('Particles count after calc:', this.size)
 
 
     this.fbo = this.getRenderTarget()

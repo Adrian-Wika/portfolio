@@ -7,13 +7,7 @@ export function VercelDataCollector() {
     const router = useRouter()
 
     return <div>
-        <Analytics mode={'production'} beforeSend={(event) => {
-            console.log(event)
-            if (event.url.includes('/private')) {
-                return null
-            }
-            return event
-        }} />
+        <Analytics mode={'production'} />
         <SpeedInsights route={router.pathname} />
     </div>
 }
