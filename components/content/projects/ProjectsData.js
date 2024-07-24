@@ -7,61 +7,54 @@ export const projectsList = [
     },
 
     {
-        image: '',
+        image: '/content_icons/calculations.png',
         label: 'System rozliczania kontrahentów',
         description: 'Projekt wewnątrz firmowy',
-        content: ""
+        content: "System służący do rejestrowania zamówień od kontrahentów wraz z upustami rocznymi/miesięcznymi z automatycznym sumowaniem i rozliczaniem per kontrahent/kupiec/produkt itd."
     },
 
     {
-        image: '',
+        image: '/content_icons/chatbot.png',
         label: 'Aplikacja ChatDude AI',
         status: 'W trakcie',
         description: 'Projekt prywatny',
-        content: ""
+        content: "Aplikacja voice chat bot z wbudowanym AI i mimiką ludzkiej twarzy. Z botem można przeprowadzać konwersacje itp."
     },
 
     {
-        image: '',
+        image: '/content_icons/thief.png',
         label: 'System zgłoszeń kradzieży',
         description: 'Projekt wewnątrz firmowy',
-        content: ""
+        content: "System zaprojektowany do zgłaszania i obsługi zdarzeń kradzieży na obiektach firmy. Aplikacja obsługuje proces zgłoszenia kradzieży, wyceny, weryfikacji pism z policji i ściągniecia ze stanów magazynowych."
     },
 
     {
-        image: '',
+        image: '/content_icons/loan.png',
         label: 'System pożyczek pracowniczych',
         description: 'Projekt wewnątrz firmowy',
-        content: ""
+        content: "System benefitowy pożyczek pracowniczych. Aplikacja umożliwia dodanie pożyczki do systemu (wygenerowanie umowy, harmonogramu, zleceń przelewów itp), weryfikacje wniosku (stan zatrudnienia) oraz wysyłke i synchronizacje z Burem Informacji Kredytowej."
     },
 
     {
-        image: '',
+        image: '/content_icons/assets.png',
         label: 'System zarządzania środkami trwałymi',
         description: 'Projekt wewnątrz firmowy',
-        content: ""
+        content: "System stworzony na potrzeby śledzenia środków trwałych na wszystkch obiektach firmowych oraz stanów przypisanych do konkretnych pracowników. Obługuje ręczne dodawanie środka, kategoryzacje środka, generowanie etykiety, masowe importy/exporty, skanowanie etykiet oraz przesuwanie i wyświetlanie danego środka trwałego wraz z sprawdzaniem stanu obiektu/osoby."
     },
 
     {
-        image: '',
+        image: '/content_icons/car.png',
         label: 'Aplikacja do śledzenia stanu pojazdu',
         status: 'W trakcie',
         description: 'Projekt prywatny, zlecony',
-        content: ""
+        content: "Prosta aplikacja służąca do monitorowania stanów pojazdów, w stan wliczając: ostanie mycie, wymiane akumulatora itp. Aplikacja zintegrowana jako część już istniejącego systemu."
     },
 
     {
-        image: '',
-        label: 'Aplikacja do śledzenia rozliczeń wewnętrznych',
-        description: 'Projekt wewnątrz firmowy',
-        content: ""
-    },
-
-    {
-        image: '',
+        image: '/content_icons/map.png',
         label: 'Interaktywna mapa lokalizacji',
         description: 'Projekt wewnątrz firmowy',
-        content: ""
+        content: "Mapa lokalizacji zintegorwana z API MapBox. Mapa obługuje custmowe generowanie interaktywnych znaczników wraz z wyszukiwarką."
     },
 
     {
