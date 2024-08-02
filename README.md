@@ -4,6 +4,10 @@ Welcome to my portfolio project! This project showcases my skills, projects, and
 
 ## Installation
 To run this project locally, follow these steps:
-1. Clone the repository:
-2. Run ```npm i
-3. Run ```npm run dev
+1. Clone this repository.
+2. Run instalaltion:
+   ```sh
+   npm install
+3. Run localhost:
+   ```sh
+   npm run dev
