@@ -4,10 +4,14 @@ Welcome to my portfolio project! This project showcases my skills, projects, and
 
 ## Installation
 To run this project locally, follow these steps:
-1. Clone this repository.
-2. Run instalaltion:
+1. Clone this repository:
+    ```sh
+   git clone git@github.com:Adrian-Wika/portfolio.git
+    
+3. Run instalaltion:
    ```sh
    npm install
-3. Run localhost:
+   
+4. Run localhost:
    ```sh
    npm run dev
