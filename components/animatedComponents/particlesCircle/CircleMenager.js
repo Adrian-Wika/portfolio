@@ -102,10 +102,10 @@ export default class Circle {
   setupFBO() {
     const defaultSize = this.isMobile ? 5 : 7
     const properSize = defaultSize * this.fps
-    this.size = (properSize > 1000 ? 1000 : properSize) ?? 350
+    this.size = (properSize > 1000 ? 1000 : properSize) ?? 300
 
     console.info('Performance tier:', this.performanceTier + '/3')
-    console.info('Particles count:', this.size)
+    console.info('Particles count:', this.size * this.size * 4)
 
 
     this.fbo = this.getRenderTarget()
