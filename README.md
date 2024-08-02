@@ -15,3 +15,6 @@ To run this project locally, follow these steps:
 4. Start the development server:
    ```sh
    npm run dev
+
+## License
+The code in this repository is copyrighted. You may view the code, but you are not permitted to copy, modify, or use it in any way without the express permission of the author.
