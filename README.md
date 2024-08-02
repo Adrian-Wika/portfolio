@@ -1,5 +1,9 @@
-# Mantine Next Template
+# My Portfolio
 
-Get started with the template by clicking `Use this template` button on the top of the page.
+Welcome to my portfolio project! This project showcases my skills, projects, and experiences as a developer. It includes various sections highlighting my work, such as web development.
 
-[Documentation](https://mantine.dev/guides/next/)
+## Installation
+To run this project locally, follow these steps:
+1. Clone the repository:
+2. Run ```npm i
+3. Run ```npm run dev
