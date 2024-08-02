@@ -8,7 +8,7 @@ To run this project locally, follow these steps:
     ```sh
    git clone git@github.com:Adrian-Wika/portfolio.git
     
-3. Run instalaltion:
+3. Run installation:
    ```sh
    npm install
    
