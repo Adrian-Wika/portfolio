@@ -1,6 +1,7 @@
-import { Accordion, Avatar, Badge, Button, Card, Group, Image, Spoiler, Text } from "@mantine/core"
+import { Accordion, Avatar, Badge, Group, Text } from "@mantine/core"
+import { IconExternalLink } from '@tabler/icons-react'
 import { projectsList } from './ProjectsData'
-import { IconCode, IconComponents, IconHome, IconExternalLink } from '@tabler/icons-react'
+import { useState } from "react"
 
 
 interface AccordionLabelProps {
@@ -38,6 +39,7 @@ function AccordionLabel({ label, image, description, links, status }: AccordionL
 }
 
 const ProjectsManager = () => {
+    const [value, setValue] = useState<string | null>(null)
 
     const items = projectsList.map((item, index) => (
         <Accordion.Item value={index.toString()} key={item.label}>
@@ -62,7 +64,10 @@ const ProjectsManager = () => {
             <div className="bg-transparent backdrop-blur-md p-5 rounded-lg shadow-lg max-w-lg text-center">
                 <h1 className="text-2xl md:text-3xl font-bold mb-4">Projekty w których brałem udział:</h1>
                 <div className=" max-h-[60vh] overflow-auto">
-                    <Accordion chevronPosition="right" variant="contained">
+                    <Accordion value={value} onChange={setValue} chevronPosition="right" variant="contained" classNames={{
+                        item: 'customAccordion',
+                        control: 'customAccordion2'
+                    }}>
                         {items}
                     </Accordion>
                 </div>
