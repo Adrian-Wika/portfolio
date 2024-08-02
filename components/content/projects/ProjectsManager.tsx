@@ -1,15 +1,20 @@
 import { Accordion, Avatar, Badge, Button, Card, Group, Image, Spoiler, Text } from "@mantine/core"
 import { projectsList } from './ProjectsData'
+import { IconCode, IconComponents, IconHome, IconExternalLink } from '@tabler/icons-react'
 
 
 interface AccordionLabelProps {
     label: string
     image: string
     description: string
+    links?: {
+        url: string
+        name: string
+    }[]
     status?: string | undefined
 }
 
-function AccordionLabel({ label, image, description, status }: AccordionLabelProps) {
+function AccordionLabel({ label, image, description, links, status }: AccordionLabelProps) {
     return (
         <Group wrap="nowrap">
             <Avatar src={image} radius="xl" size="lg" />
@@ -25,6 +30,8 @@ function AccordionLabel({ label, image, description, status }: AccordionLabelPro
                 <Text size="sm" c="dimmed" fw={400} className="flex flex-col">
                     {description}
                 </Text>
+
+
             </div>
         </Group>
     )
@@ -39,6 +46,13 @@ const ProjectsManager = () => {
             </Accordion.Control>
             <Accordion.Panel>
                 <Text size="sm">{item.content}</Text>
+                {item?.links && item?.links?.length > 0 && (
+                    <div className=" text-[0.65rem] mt-2 flex flex-row gap-1 justify-end">
+                        {item.links?.map((link, index) => {
+                            return <a className=" flex flex-row items-start hover:text-blue-400 duration-300" key={index} href={link.url}>{link.name} <IconExternalLink size={11} /></a>
+                        })}
+                    </div>
+                )}
             </Accordion.Panel>
         </Accordion.Item>
     ))
